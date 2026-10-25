@@ -20,17 +20,16 @@ class TypeSafeAIService {
         Logger.info("Analyzing intent for top {} comments..", comments.size());
 
         var analysis = DecisionServices.create(IntentAnalysis.class, decisionModel);
-        var msgIntents = comments.stream()
-                                 .map(c -> new MessageIntent(c, analysis.analyze(c)))
-                                 .toList();
 
-        Logger.info(msgIntents);
+        comments.stream()
+                .map(c -> new MessageIntent(c, analysis.analyze(c)))
+                .forEach(MessageIntent::print);
     }
 
 
     interface IntentAnalysis {
 
-        @Decide("What is the intent of the given message")
+        @Decide("What is the intent of the given message/?")
         Intent analyze(String message);
     }
 

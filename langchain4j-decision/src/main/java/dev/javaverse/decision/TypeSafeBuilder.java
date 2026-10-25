@@ -19,10 +19,10 @@ class TypeSafeBuilder {
                                       .build();
 
         Logger.info("Analyzing intent for top {} comments..", comments.size());
-        var msgIntents = comments.stream()
-                                 .map(c -> decide(dm, c))
-                                 .toList();
-        Logger.info(msgIntents);
+
+        comments.stream()
+                .map(c -> decide(dm, c))
+                .forEach(MessageIntent::print);
     }
 
     MessageIntent decide(DecisionModel model, String comment) {
